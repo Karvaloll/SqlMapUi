@@ -23,7 +23,7 @@ python3 Main.py
 ```
 
 ___
-Ссылки:
+Источники:
 
 https://github.com/sqlmapproject/sqlmap/wiki/Usage
 
