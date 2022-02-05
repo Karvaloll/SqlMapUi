@@ -20,58 +20,48 @@ from loguru import logger
 
 logger.add("comands.log", format="[{time:YYYY-MM-DD at HH:mm}] \n {message}\n", rotation="50 MB")
 
-Config.set('graphics', 'minimum_width', 1024)  # установка минимального размера окна (ширина)
-Config.set('graphics', 'minimum_height', 850)  # установка минимального размера окна (высота)
-Config.set('kivy', 'keyboard_mode', 'system')  # Отключение всплывающей клавиатуры
-Config.set('input', 'mouse', 'mouse,multitouch_on_demand')  # Отключение мультитач через правую кнопку мыши
+Config.set('graphics', 'minimum_width', 1024)
+Config.set('graphics', 'minimum_height', 850)
+Config.set('kivy', 'keyboard_mode', 'system')
+Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 rezult_global_dict = result_dict
 
 
 class TabbedPanelMain(TabbedPanel):
-    """Панель с вкладками"""
     pass
 
 
 class ErrorPage(FloatLayout):
-    """Вызов окна с ошибкой"""
     cancel = ObjectProperty(None)
 
     def put_error_message(self, message: str) -> None:
-        """Вывод сообщения об ошибке в окно"""
-        self.error_lable.text = message  # выводим сообщение
+        self.error_lable.text = message
 
 
 class ResultPage(FloatLayout):
-    """Страница с командой sqlmap"""
     cancel = ObjectProperty(None)
 
     def put_result_message(self, message: str) -> None:
-        """Вывод собранной из словаря команды"""
-        self.result_lable.text = message  # выводим сообщение
+        self.result_lable.text = message
 
     def copy_result_out(self) -> None:
-        """Копирование данных из окна в буфер обмена"""
         Clipboard.copy(self.result_lable.text)
-        logger.info(self.result_lable.text)  # Запись команды в лог файл
+        logger.info(self.result_lable.text)
 
     def execute_command(self) -> None:
-        """Выполнение команды в терминале"""
-        logger.info(self.result_lable.text)  # Запись команды в лог файл
+        logger.info(self.result_lable.text)
         subprocess.run(self.result_lable.text, shell=True)
 
 
 class LoadHelpString(FloatLayout):
-    """Загрузка строки помощи из файла help.py"""
     cancel = ObjectProperty(None)
 
     def put_text_message(self, target_key: str) -> None:
-        """Принимаем ключ для словаря из kv файла (при нажатии кнопки "?")"""
-        self.help_lable.text = help_dict[target_key]  # выводим сообщение
+        self.help_lable.text = help_dict[target_key]
 
 
 class HttpProtokolAuth(FloatLayout):
-    """Выбор элементов для HTTP protocol authentication"""
     global rezult_global_dict
     cancel = ObjectProperty(None)
 
@@ -80,20 +70,16 @@ class HttpProtokolAuth(FloatLayout):
         self.save_option = ''
 
     def option_http_protokol_auth(self, checkbox_value: str, option: str) -> None:
-        """Сохранение значения CheckBox"""
         if checkbox_value:
             self.save_option = option
             rezult_global_dict['--auth-type'] = True
 
     def save_http_protokol_auth_option(self) -> None:
-        """Сохранение выбранных значений в итоговый словарь"""
-        if rezult_global_dict['--auth-type']:  # Проверка выбора параметра
+        if rezult_global_dict['--auth-type']:
             rezult_global_dict['--auth-type'] = self.save_option
 
 
 class Technique(FloatLayout):
-    """Выбор элементов для Technique"""
-
     global rezult_global_dict
     cancel = ObjectProperty(None)
 
@@ -103,11 +89,9 @@ class Technique(FloatLayout):
         self.option_dict = {}
 
     def option_techniques(self, checkbox_value: str, option: str) -> None:
-        """Сохранение результатов выбора в промежуточный словарь"""
         self.option_dict[option] = checkbox_value
 
     def save_techniques_option(self) -> None:
-        """Сохранение выбора из промежуточного словаря в итоговый"""
         for key, value in self.option_dict.items():
             if value:
                 self.save_option += key
@@ -116,32 +100,26 @@ class Technique(FloatLayout):
 
 
 class Tamper(BoxLayout):
-    """Выбор скриптов для tamper"""
     global rezult_global_dict
     cancel = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._popup = None
-        self.save_option = ''  # финальная строка для добавления в словарь
-        self.option_dict = {}  # промежуточный словарь
+        self.save_option = ''
+        self.option_dict = {}
 
     def option_tamper(self, instance: str, checkbox_name: str, notuse: str, checkbox_value: str) -> None:
-        """Сохранение результатов Checkbox в промежуточный словарь"""
         self.option_dict[checkbox_name] = checkbox_value
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def select_tamper(self) -> None:
-        """Создание элементов интерфейса с помошб цикла"""
-        for i in tamper_list:  # список всех скриптов tamper
+        for i in tamper_list:
             anc_check = AnchorLayout(size_hint=(0.2, 1), anchor_x='left', anchor_y='center')
             check = CheckBox()
-            check.bind(active=partial(self.option_tamper, check.active,
-                                      i))  # так как нельзя указать функцию как funct(arg) и передать явно аргументы,
-            # используем модуль functools.partial
+            check.bind(active=partial(self.option_tamper, check.active, i))
             anc_help = AnchorLayout(size_hint=(0.1, 1), anchor_x='center', anchor_y='center')
             button = Button(background_color=(0, 0, 1), text='?')
             button.bind(on_release=partial(self.show_help_string, i))
@@ -154,19 +132,15 @@ class Tamper(BoxLayout):
             tamper_layout.add_widget(anc_check)
             tamper_layout.add_widget(anc_help)
             tamper_layout.add_widget(anc_lable)
-            self.tamper_page.add_widget(tamper_layout)  # добавляем все виджеты в Layout id=tamper_layout
+            self.tamper_page.add_widget(tamper_layout)
 
     def show_help_string(self, target_key: str, notused: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def save_temper_option(self) -> None:
-        """Обработка помежуточного словаря и запись итоговой строки в итоговый словарь"""
         for key, value in self.option_dict.items():
             if value:
                 self.save_option += key + ','
@@ -176,24 +150,18 @@ class Tamper(BoxLayout):
 
 
 class SaveString(FloatLayout):
-    """Сохранение данных из поля в виде строки"""
     global rezult_global_dict
     save_value = ''
     dict_key = ObjectProperty(None)
     cancel = ObjectProperty(None)
 
     def clear_input_target(self) -> None:
-        """Очистка поля по нажаатию кнопки"""
         self.save_input_text.text = ''
 
     def paste_in_input_text(self) -> None:
-        """вставка текста в полe из буфера обмена по нажатию кнопки"""
         self.save_input_text.paste()
 
     def save_text(self) -> None:
-        """Сохранение введенного текста в словарь и
-        добавление к некоторым ключам [$] чтобы в финальном выводе
-         не ставить кавычки и знак равно"""
         if rezult_global_dict[self.dict_key]:
             if self.dict_key == '-D':
                 rezult_global_dict[self.dict_key] = '[$]' + self.save_input_text.text
@@ -210,7 +178,6 @@ class SaveString(FloatLayout):
 
 
 class RequestsPage(StackLayout):
-    """Страница с параметрами запроса"""
     global rezult_global_dict
 
     def __init__(self, **kwargs):
@@ -219,79 +186,60 @@ class RequestsPage(StackLayout):
 
     @staticmethod
     def request_page_to_dict(checkbox_value: str, dict_key: str) -> None:
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def show_files_path(self, key: str) -> None:
-        """открытие всплывающего окна с выбором файла"""
-        content = LoadFilePath(cancel=self.dismiss_popup,
-                               dict_key=key)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadFilePath(cancel=self.dismiss_popup, dict_key=key)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def add_input_text(self, dict_key: str) -> None:
-        """Открытие окна для сохранения текстовых данных"""
         content_text = SaveString(cancel=self.dismiss_popup, dict_key=dict_key)
-        self._popup = Popup(title="Добавить", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Добавить", content=content_text,size_hint=(0.6, 0.4))
         self._popup.open()
 
     def http_protokol_auth(self) -> None:
-        """Открытие окна для выбора из нескольких элементов"""
         content_text = HttpProtokolAuth(cancel=self.dismiss_popup)
-        self._popup = Popup(title="Выбор", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Выбор", content=content_text, size_hint=(0.6, 0.4))
         self._popup.open()
 
 
 class LoadFilePath(FloatLayout):
-    """Открываем проводник и сохраняем выбор файла в словарь"""
     global rezult_global_dict
-    cancel = ObjectProperty(None)  # Создаем промежуточные объекты, для связи нескольких виджетов
+    cancel = ObjectProperty(None)
     dict_key = ObjectProperty(None)
 
     def selected_file_target(self, filename: str) -> None:
-        """Сохранение выбора пользователя в словарь"""
         rezult_global_dict[self.dict_key] = filename[0]
 
 
 class LoadPath(FloatLayout):
-    """Открываем проводник и сохраняем выбор пути в словарь"""
     global rezult_global_dict
-    cancel = ObjectProperty(None)  # Создаем промежуточные объекты, для связи нескольких виджетов
+    cancel = ObjectProperty(None)
     dict_key = ObjectProperty(None)
 
     def selected_path_target(self, path: str) -> None:
-        """Сохранение выбора пользователя в словарь"""
         rezult_global_dict[self.dict_key] = path
 
 
 class LoadFileTarget(FloatLayout):
-    """Открываем проводник и сохраняем выбор в поле для URL"""
-    cancel = ObjectProperty(None)  # Создаем промежуточные объекты, для связи нескольких виджетов
+    cancel = ObjectProperty(None)
     field_url = ObjectProperty(None)
 
     def selected_file_target(self, filename: str) -> None:
-        """Вызываемая в kv файле функция, принимает выбор пользователя"""
-        self.field_url.text = filename[0]  # запись выбора в поле
+        self.field_url.text = filename[0]
 
 
 class OptimisationPage(StackLayout):
@@ -303,35 +251,27 @@ class OptimisationPage(StackLayout):
 
     @staticmethod
     def optimisation_page_to_dict(checkbox_value: str, dict_key: str) -> None:
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def add_input_text(self, dict_key: str) -> None:
-        """Открытие окна для сохранения текстовых данных"""
         content_text = SaveString(cancel=self.dismiss_popup, dict_key=dict_key)
-        self._popup = Popup(title="Добавить", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Добавить", content=content_text, size_hint=(0.6, 0.4))
         self._popup.open()
 
 
 class InjectionPage(StackLayout):
-    """Страница Инекция"""
     global rezult_global_dict
 
     def __init__(self, **kwargs):
@@ -340,37 +280,28 @@ class InjectionPage(StackLayout):
 
     @staticmethod
     def injection_page_to_dict(checkbox_value: str, dict_key: str) -> None:
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def add_input_text(self, dict_key: str) -> None:
-        """Вставка значения ключа в словаре результата"""
         content_text = SaveString(cancel=self.dismiss_popup, dict_key=dict_key)
-        self._popup = Popup(title="Добавить", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Добавить", content=content_text, size_hint=(0.6, 0.4))
         self._popup.open()
 
     def tamper(self) -> None:
-        """Окно с выбором из нескольких элементов"""
         content_text = Tamper(cancel=self.dismiss_popup)
-        self._popup = Popup(title="Выбор", content=content_text,
-                            size_hint=(0.99, 0.9))
+        self._popup = Popup(title="Выбор", content=content_text, size_hint=(0.99, 0.9))
         self._popup.open()
 
 
@@ -383,35 +314,27 @@ class DetectionPage(StackLayout):
 
     @staticmethod
     def detection_page_to_dict(checkbox_value: str, dict_key: str):
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def add_input_text(self, dict_key) -> None:
-        """Вставка значения ключа в словаре результата"""
         content_text = SaveString(cancel=self.dismiss_popup, dict_key=dict_key)
-        self._popup = Popup(title="Добавить", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Добавить", content=content_text, size_hint=(0.6, 0.4))
         self._popup.open()
 
 
 class EnumerationPage(StackLayout):
-    """ Страница "Перечисления" """
     global rezult_global_dict
 
     def __init__(self, **kwargs):
@@ -420,44 +343,32 @@ class EnumerationPage(StackLayout):
 
     @staticmethod
     def enumeration_page_to_dict(checkbox_value: str, dict_key: str) -> None:
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def show_files_path(self, key: str) -> None:
-        """открытие всплывающего окна с выбором папки"""
-        content = LoadFilePath(cancel=self.dismiss_popup,
-                               dict_key=key)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadFilePath(cancel=self.dismiss_popup, dict_key=key)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
     def add_input_text(self, dict_key: str) -> None:
-        """Вставка значения ключа в словаре результата"""
         content_text = SaveString(cancel=self.dismiss_popup, dict_key=dict_key)
-        self._popup = Popup(title="Добавить", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Добавить", content=content_text, size_hint=(0.6, 0.4))
         self._popup.open()
 
 
 class BrootFuncPage(StackLayout):
-    """Страница Брут функций"""
     global rezult_global_dict
 
     def __init__(self, **kwargs):
@@ -466,37 +377,27 @@ class BrootFuncPage(StackLayout):
 
     @staticmethod
     def broot_func_page_to_dict(checkbox_value: str, dict_key: str) -> None:
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def show_files_path(self, key: str) -> None:
-        """открытие всплывающего окна с выбором файла"""
-        content = LoadFilePath(cancel=self.dismiss_popup,
-                               dict_key=key)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadFilePath(cancel=self.dismiss_popup, dict_key=key)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
 
 class TechniquesPage(StackLayout):
-    """Страница Техники"""
     global rezult_global_dict
 
     def __init__(self, **kwargs):
@@ -505,51 +406,37 @@ class TechniquesPage(StackLayout):
 
     @staticmethod
     def techniques_page_to_dict(checkbox_value: str, dict_key: str) -> None:
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def add_input_text(self, dict_key: str) -> None:
-        """Вставка значения ключа в словаре результата"""
         content_text = SaveString(cancel=self.dismiss_popup, dict_key=dict_key)
-        self._popup = Popup(title="Добавить", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Добавить", content=content_text, size_hint=(0.6, 0.4))
         self._popup.open()
 
     def technique(self) -> None:
-        """Выбор из нескольких элементов"""
         content_text = Technique(cancel=self.dismiss_popup)
-        self._popup = Popup(title="Выбор", content=content_text,
-                            size_hint=(0.4, 0.4))
+        self._popup = Popup(title="Выбор", content=content_text, size_hint=(0.4, 0.4))
         self._popup.open()
 
     def show_files_path(self, key: str) -> None:
-        """открытие всплывающего окна с выбором файла"""
-        content = LoadFilePath(cancel=self.dismiss_popup,
-                               dict_key=key)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadFilePath(cancel=self.dismiss_popup, dict_key=key)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
 
 class AccessPage(StackLayout):
-    """Страница Доступ"""
     global rezult_global_dict
 
     def __init__(self, **kwargs):
@@ -558,44 +445,32 @@ class AccessPage(StackLayout):
 
     @staticmethod
     def access_page_to_dict(checkbox_value: str, dict_key: str) -> None:
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def add_input_text(self, dict_key: str) -> None:
-        """Вставка значения ключа в словаре результата"""
         content_text = SaveString(cancel=self.dismiss_popup, dict_key=dict_key)
-        self._popup = Popup(title="Добавить", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Добавить", content=content_text, size_hint=(0.6, 0.4))
         self._popup.open()
 
     def show_files_path(self, key: str) -> None:
-        """открытие всплывающего окна с выбором файла"""
-        content = LoadFilePath(cancel=self.dismiss_popup,
-                               dict_key=key)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadFilePath(cancel=self.dismiss_popup, dict_key=key)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
 
 class GeneralPage(StackLayout):
-    """Страница Общие"""
     global rezult_global_dict
 
     def __init__(self, **kwargs):
@@ -604,53 +479,37 @@ class GeneralPage(StackLayout):
 
     @staticmethod
     def general_page_to_dict(checkbox_value: str, dict_key: str) -> None:
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def add_input_text(self, dict_key: str) -> None:
-        """Вставка значения ключа в словаре результата"""
         content_text = SaveString(cancel=self.dismiss_popup, dict_key=dict_key)
-        self._popup = Popup(title="Добавить", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Добавить", content=content_text, size_hint=(0.6, 0.4))
         self._popup.open()
 
     def show_files_path(self, key: str) -> None:
-        """открытие всплывающего окна с выбором файла"""
-        content = LoadFilePath(cancel=self.dismiss_popup,
-                               dict_key=key)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadFilePath(cancel=self.dismiss_popup, dict_key=key)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
     def show_path(self, key: str) -> None:
-        """открытие всплывающего окна с выбором папки"""
-        content = LoadPath(cancel=self.dismiss_popup,
-                           dict_key=key)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadPath(cancel=self.dismiss_popup, dict_key=key)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
 
 class MiscellaneousPage(StackLayout):
-    """Страница Разное"""
     global rezult_global_dict
 
     def __init__(self, **kwargs):
@@ -659,105 +518,73 @@ class MiscellaneousPage(StackLayout):
 
     @staticmethod
     def miscellaneous_page_to_dict(checkbox_value: str, dict_key: str) -> None:
-        """При установке галочки меняет значение ключа в словаре с False на True"""
         if checkbox_value:
             rezult_global_dict[dict_key] = True
         else:
             rezult_global_dict[dict_key] = False
 
     def show_help_string(self, target_key: str) -> None:
-        """При нажатии на ?, на странице request вызывает окно с  подсказкой"""
-        content_help = LoadHelpString(
-            cancel=self.dismiss_popup)  # Связывание параметров класса LoadHelpString c переменнымы класса RequestPage
-        self._popup = Popup(title="Подсказка", content=content_help,
-                            size_hint=(0.6, 0.4))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
-        content_help.put_text_message(target_key)  # помещение текста во всплывающие окно
+        content_help = LoadHelpString(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Подсказка", content=content_help, size_hint=(0.6, 0.4))
+        self._popup.open()
+        content_help.put_text_message(target_key)
 
     def dismiss_popup(self) -> None:
-        """Закрытие всплывающего окна"""
         self._popup.dismiss()
 
     def add_input_text(self, dict_key: str) -> None:
-        """Вставка значения ключа в словаре результата"""
         content_text = SaveString(cancel=self.dismiss_popup, dict_key=dict_key)
-        self._popup = Popup(title="Добавить", content=content_text,
-                            size_hint=(0.6, 0.4))
+        self._popup = Popup(title="Добавить", content=content_text, size_hint=(0.6, 0.4))
         self._popup.open()
 
     def show_files_path(self, key: str) -> None:
-        """открытие всплывающего окна с выбором файла"""
-        content = LoadFilePath(cancel=self.dismiss_popup,
-                               dict_key=key)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadFilePath(cancel=self.dismiss_popup, dict_key=key)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
     def show_path(self, key: str) -> None:
-        """открытие всплывающего окна с выбором папки"""
-        content = LoadPath(cancel=self.dismiss_popup,
-                           dict_key=key)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadPath(cancel=self.dismiss_popup, dict_key=key)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
 
 class MainContainer(BoxLayout):
-    """Класс основного окна"""
     global rezult_global_dict
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._popup = None
-        self.target_type = '-u'  # общие переменные для всех методов
+        self.target_type = '-u'
 
     def dismiss_popup(self) -> None:
-        """функция закрытия всплывающего окна"""
         self._popup.dismiss()
 
     def show_files_target(self) -> None:
-        """открытие всплывающего окна с выбором файла"""
-        content = LoadFileTarget(cancel=self.dismiss_popup,
-                                 field_url=self.input_target)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Выбор файла", content=content,
-                            size_hint=(0.9, 0.9))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        content = LoadFileTarget(cancel=self.dismiss_popup, field_url=self.input_target)
+        self._popup = Popup(title="Выбор файла", content=content, size_hint=(0.9, 0.9))
+        self._popup.open()
 
     def paste_in_input_target(self) -> None:
-        """вставка текста, в поле URL из буфера обмена по нажатию кнопки"""
         self.input_target.text = ''
         self.input_target.paste()
 
     def clear_input_target(self) -> None:
-        """Очистка поля URL при клике в него"""
         self.input_target.text = ''
 
     def show_error(self, message: str) -> None:
-        """открытие всплывающего окна с ошибкой"""
-        error_content = ErrorPage(
-            cancel=self.dismiss_popup)  # связывание параметров класса LoadFile с виджетами MainContainer
+        error_content = ErrorPage(cancel=self.dismiss_popup)
 
-        self._popup = Popup(title="Ошибка", content=error_content,
-                            size_hint=(0.3, 0.2))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        self._popup = Popup(title="Ошибка", content=error_content, size_hint=(0.3, 0.2))
+        self._popup.open()
         error_content.put_error_message(message)
 
     def show_rezult(self, message: str) -> None:
-        """открытие всплывающего окна с итоговой командой"""
-        result_content = ResultPage(
-            cancel=self.dismiss_popup)  # связывание параметров класса LoadFile с виджетами MainContainer
-
-        self._popup = Popup(title="Командв SQLMap", content=result_content,
-                            size_hint=(0.9, 0.5))  # создание всплывающего окна
-        self._popup.open()  # открытие всплывающего окна
+        result_content = ResultPage(cancel=self.dismiss_popup)
+        self._popup = Popup(title="Командв SQLMap", content=result_content, size_hint=(0.9, 0.5))
+        self._popup.open()
         result_content.put_result_message(message)
 
     def change_lablle_on_target(self) -> None:
-        """Меняет способ задания цели. Виджет spiner
-        Меняет надпись над полем ввода цели"""
         get_spiner_target_data = self.spiner_target_data.text
 
         if get_spiner_target_data == 'URL':
@@ -784,7 +611,6 @@ class MainContainer(BoxLayout):
 
     @staticmethod
     def search_quotation_mark(string: str) -> str:
-        """Поиск кавычек в строке. И выбор обрамляющих кавычек"""
         rezult_string = ''
         if string.find('[$]') == 0:
             rezult_string += f" {string[3:]}"
@@ -795,7 +621,6 @@ class MainContainer(BoxLayout):
         return rezult_string
 
     def get_rezult(self, ) -> None:
-        """Создание итоговой строки"""
         result_string = f'{sqlmap_path} '
         for key_rez, value_rez in rezult_global_dict.items():
             if value_rez != False and value_rez != True:
@@ -805,7 +630,6 @@ class MainContainer(BoxLayout):
         self.show_rezult(result_string)
 
     def target_get_link(self) -> bool:
-        """Получение данных из поля цели"""
         rezult_global_dict['-u'] = False
         rezult_global_dict['-d'] = False
         rezult_global_dict['-l'] = False
@@ -820,8 +644,6 @@ class MainContainer(BoxLayout):
             return True
 
     def create_sqlmap_command(self) -> None:
-        """Сбор данных со всех полей, сохранение их в JSON файл
-        и вывод готовой команды в отдельном окне"""
         if self.target_get_link():
             self.get_rezult()
 
