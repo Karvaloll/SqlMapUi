@@ -1,0 +1,353 @@
+<Technique>:
+
+	BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+
+        GridLayout:
+            cols: 3
+	        CheckBox:
+	            size_hint_x: 0.1
+	            on_active: root.option_techniques(self.active, "B")
+	        Label:
+	            size_hint_x: 0.1
+	            text: "B"
+	        Label:
+	            size_hint_x: 0.8
+	            text: "Boolean-based blind"
+	        CheckBox:
+	            on_active: root.option_techniques(self.active, "E")
+	            size_hint_x: 0.1
+	        Label:
+	            text: "E"
+	            size_hint_x: 0.1
+	        Label:
+	            text: "Error-based"
+	            size_hint_x: 0.8
+	        CheckBox:
+	            on_active: root.option_techniques(self.active, "U")
+	            size_hint_x: 0.1
+	        Label:
+	            text: "U"
+	            size_hint_x: 0.1
+	        Label:
+	            text: "Union query-based"
+	            size_hint_x: 0.8
+	        CheckBox:
+	            on_active: root.option_techniques(self.active, "S")
+	            size_hint_x: 0.1
+	        Label:
+	            text: "S"
+	            size_hint_x: 0.1
+	        Label:
+	            text: "Stacked queries"
+	            size_hint_x: 0.8
+	        CheckBox:
+	            on_active: root.option_techniques(self.active, "T")
+	            size_hint_x: 0.1
+	        Label:
+	            text: "T"
+	            size_hint_x: 0.1
+	        Label:
+	            text: "Time-based blind"
+	            size_hint_x: 0.8
+	        CheckBox:
+	            on_active: root.option_techniques(self.active, "Q")
+	            size_hint_x: 0.1
+	        Label:
+	            text: "Q"
+	            size_hint_x: 0.1
+	        Label:
+	            text: "Inline queries"
+	            size_hint_x: 0.8
+
+        BoxLayout:
+            size_hint_y: None
+            height: 40
+            spacing: 2
+            padding: 2
+            Button:
+                text: "Отмена"
+                background_color: 1, 0, 0
+                on_release: root.cancel()
+
+            Button:
+                background_color: 0, 1, 0
+                text: "Добавить"
+                on_release: root.save_techniques_option(), root.cancel()
+
+
+
+<TechniquesPage>:
+	orientation: 'tb-lr'
+	spacing: 3
+	padding: 3
+
+	AnchorLayout:
+		size_hint: 1, 0.04
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: 'Эти опции можно использовать для поднастройки тестирования отдельных техник SQL инъекции'
+
+
+	# --technique
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.techniques_page_to_dict(self.active, '--technique')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--technique')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'technique'
+				on_release: root.technique()
+
+	# --time-sec
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.techniques_page_to_dict(self.active, '--time-sec')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--time-sec')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'time-sec'
+				on_release: root.add_input_text('--time-sec')
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'left'
+		anchor_y: 'top'
+		Label:
+			halign: 'left'
+			text: '-- UNION --'
+			color: [105, 106, 188, 1]
+
+	# --union-cols
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.techniques_page_to_dict(self.active, '--union-cols')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--union-cols')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'union-cols'
+				on_release: root.add_input_text('--union-cols')
+
+	# --union-char
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.techniques_page_to_dict(self.active, '--union-char')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--union-char')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'union-char'
+				on_release: root.add_input_text('--union-char')
+
+	# --union-from
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.techniques_page_to_dict(self.active, '--union-from')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--union-from')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'union-from'
+				on_release: root.add_input_text('--union-from')
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'left'
+		anchor_y: 'top'
+		Label:
+			halign: 'left'
+			text: '--   --'
+			color: [105, 106, 188, 1]
+
+	# --dns-domain
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.techniques_page_to_dict(self.active, '--dns-domain')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--dns-domain')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'dns-domain'
+				on_release: root.add_input_text('--dns-domain')
+
+	# --second-url
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.techniques_page_to_dict(self.active, '--second-url')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--second-url')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'second-url'
+				on_release: root.add_input_text('--second-url')
+
+	# --second-url
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.techniques_page_to_dict(self.active, '--second-req')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--second-req')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'second-req'
+				on_release: root.show_files_path('--second-req')
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'left'
+		anchor_y: 'top'
+		Label:
+			halign: 'left'
+			text: '-- FINGERPRINT --'
+			color: [105, 106, 188, 1]
+
+	# --fingerprint
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self, self.active, '--fingerprint')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--fingerprint')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'fingerprint'

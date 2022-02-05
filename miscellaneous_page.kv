@@ -1,0 +1,372 @@
+<MiscellaneousPage>:
+	orientation: 'lr-tb'
+	spacing: 3
+	padding: 10
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: 'Опции, которые не попали в другие категории'
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+
+	# -z
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '-z')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-z')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'z'
+				on_release: root.add_input_text('-z')
+
+	# --alert
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--alert')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--alert')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'alert'
+				on_release: root.add_input_text('--alert')
+
+	# --beep
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--beep')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--beep')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'beep'
+
+	# --dependencies
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--dependencies')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--dependencies')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'dependencies'
+
+	# --disable-coloring
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--disable-coloring')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--disable-coloring')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'disable-coloring'
+
+	# --list-tampers
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--list-tampers')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--list-tampers')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'list-tampers'
+
+	# --offline
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--offline')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--offline')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'offline'
+
+	# --purge
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--purge')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--purge')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'purge'
+
+	# -results-file
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '-results-file')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-results-file')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'results-file'
+				on_release: root.show_files_path('-results-file')
+
+	# --sqlmap-shell
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--sqlmap-shell')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--sqlmap-shell')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'sqlmap-shell'
+
+	# -tmp-dir
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '-tmp-dir')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-tmp-dir')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'tmp-dir'
+				on_release: root.show_path('-tmp-dir')
+
+	# --unstable
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--unstable')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--unstable')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'unstable'
+
+	# --update
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--update')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--update')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'update'
+
+	# --wizard
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.miscellaneous_page_to_dict(self.active, '--wizard')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--wizard')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'wizard'
+

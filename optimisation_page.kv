@@ -1,0 +1,142 @@
+
+
+
+<OptimisationPage>:
+	orientation: 'tb-lr'
+	spacing: 3
+	padding: 3
+
+	AnchorLayout:
+		size_hint: 1, 0.04
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: 'Эти опции могут использоваться для оптимизации производительности sqlmap'
+
+	# -o
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.optimisation_page_to_dict(self.active, '-o')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-o')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'o'
+
+	# --predict-output
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.optimisation_page_to_dict(self.active, '--predict-output')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--predict-output')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'predict-output'
+
+	# --keep-alive
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.optimisation_page_to_dict(self.active, '--keep-alive')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--keep-alive')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'keep-alive'
+
+
+	# --null-connection
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.optimisation_page_to_dict(self.active, '--null-connection')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--null-connection')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'null-connection'
+
+	# --threads
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.optimisation_page_to_dict(self.active, '--threads')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--threads')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'threads'
+				on_release: root.add_input_text('--threads')
+

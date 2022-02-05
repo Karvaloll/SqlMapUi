@@ -1,0 +1,930 @@
+<LoadPath>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+#        сам виджет с файлами
+        FileChooserIconView:
+            id: pathchooser
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Ok"
+#                при нажатии на кнопку закрывает всплывающее окно и передаем путь
+                on_release:root.selected_path_target(pathchooser.path), root.cancel()
+
+<GeneralPage>:
+	orientation: 'lr-tb'
+	spacing: 3
+	padding: 10
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: 'Эти опции могут быть использованы для установки общих рабочих параметров'
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+
+	# -s
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '-s')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-s')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 's'
+				on_release: root.show_path('-s')
+
+	# -t
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '-t')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-t')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 't'
+				on_release: root.show_files_path('-t')
+
+	# --answers
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--answers')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--answers')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'answers'
+				on_release: root.add_input_text('--answers')
+
+	# --base64
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--base64')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--base64')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'base64'
+				on_release: root.add_input_text('--base64')
+
+	# --base64-safe
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--base64-safe')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--base64-safe')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'base64-safe'
+
+	# --batch
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--batch')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--batch')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'batch'
+
+	# --binary-fields
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--binary-fields')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--binary-fields')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'binary-fields'
+				on_release: root.add_input_text('--binary-fields')
+
+	# --check-internet
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--check-internet')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--check-internet')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'check-internet'
+
+	# --cleanup
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--cleanup')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--cleanup')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'cleanup'
+
+	# --crawl
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--crawl')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--crawl')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'crawl'
+				on_release: root.add_input_text('--crawl')
+
+	# --crawl-exclude
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--crawl-exclude')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--crawl-exclude')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'crawl-exclude'
+				on_release: root.add_input_text('--crawl-exclude')
+
+	# --csv-del
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--csv-del')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--csv-del')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'csv-del'
+				on_release: root.add_input_text('--csv-del')
+
+	# --charset
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--charset')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--charset')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'charset'
+				on_release: root.add_input_text('--charset')
+
+	# --dump-format
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--dump-format')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--dump-format')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'dump-format'
+				on_release: root.add_input_text('--dump-format')
+
+	# --encoding
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--encoding')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--encoding')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'encoding'
+				on_release: root.add_input_text('--encoding')
+
+	# --eta
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--eta')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--eta')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'eta'
+	# --flush-session
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--flush-session')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--flush-session')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'flush-session'
+
+	# --forms
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--forms')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--forms')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'forms'
+
+	# --fresh-queries
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--fresh-queries')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--fresh-queries')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'fresh-queries'
+
+	# --gpage
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--gpage')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--gpage')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'gpage'
+				on_release: root.add_input_text('--gpage')
+
+	# -har
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '-har')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-har')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'har'
+				on_release: root.show_files_path('-har')
+
+	# --hex
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--hex')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--hex')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'hex'
+
+	# -output-dir
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '-output-dir')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-output-dir')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'output-dir'
+				on_release: root.show_path('-output-dir')
+
+	# --parse-errors
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--parse-errors')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--parse-errors')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'parse-errors'
+
+	# --preprocess
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--preprocess')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--preprocess')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'preprocess'
+				on_release: root.add_input_text('--preprocess')
+
+	# --postprocess
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--postprocess')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--postprocess')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'postprocess'
+				on_release: root.add_input_text('--postprocess')
+
+	# --repair
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--repair')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--repair')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'repair'
+
+	# -save
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '-save')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-save')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'save'
+				on_release: root.show_files_path('-save')
+
+	# --scope
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--scope')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--scope')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'scope'
+				on_release: root.add_input_text('--scope')
+
+	# --skip-heuristics
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--skip-heuristics')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--skip-heuristics')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'skip-heuristics'
+
+	# --skip-waf
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--skip-waf')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--skip-waf')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'skip-waf'
+
+	# --table-prefix
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--table-prefix')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--table-prefix')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'table-prefix'
+				on_release: root.add_input_text('--table-prefix')
+
+	# --test-filter
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--test-filter')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--test-filter')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'test-filter'
+				on_release: root.add_input_text('--test-filter')
+
+	# --test-skip
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '--test-skip')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--test-skip')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'test-skip'
+				on_release: root.add_input_text('--test-skip')
+
+	# -web-root
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.general_page_to_dict(self.active, '-web-root')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-web-root')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'web-root'
+				on_release: root.add_input_text('-web-root')
+

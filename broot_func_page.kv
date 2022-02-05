@@ -1,0 +1,168 @@
+<BrootFuncPage>:
+	orientation: 'lr-tb'
+	spacing: 3
+	padding: 10
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			color: [105, 106, 188, 1]
+			halign: 'left'
+			text: '--Broot Force--'
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: 'Эти опции могут использоваться для записи проверок брут-форсом'
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+
+	# --common-tables
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.broot_func_page_to_dict(self.active, '--common-tables')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--common-tables')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'common-tables'
+
+	# --common-columns
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.broot_func_page_to_dict(self.active, '--common-columns')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--common-columns')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'common-columns'
+
+	# --common-files
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.broot_func_page_to_dict(self.active, '--common-files')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--common-files')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'common-files'
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			color: [105, 106, 188, 1]
+			halign: 'left'
+			text: '--User-defined function injection--'
+
+	AnchorLayout:
+		size_hint: 1, 0.03
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: 'Эти опции могут быть использованы для создания определённых пользователем функций'
+
+	# --udf-inject
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.broot_func_page_to_dict(self.active, '--udf-inject')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--udf-inject')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'udf-inject'
+
+	# --shared-lib
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.broot_func_page_to_dict(self.active, '--shared-lib')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--shared-lib')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'shared-lib'
+				on_release: root.show_files_path('--shared-lib')

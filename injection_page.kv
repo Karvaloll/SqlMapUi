@@ -1,0 +1,517 @@
+
+<Tamper>:
+	orientation: 'vertical'
+	spacing: 3
+	padding: 3
+	tamper_page: tamper_page
+
+    StackLayout:
+        id: tamper_page
+        orientation: 'lr-tb'
+		spacing: 2
+		padding: 2
+		on_parent: root.select_tamper() # при запуске виджета, запускается функция.
+
+	BoxLayout:
+		size_hint: 1, 0.08
+		orientation: 'horizontal'
+
+	    AnchorLayout:
+	        anchor_x: 'left'
+	        anchor_y: 'bottom'
+	        size_hint_x: 0.45
+	        size_hint_y: None
+	        height: 40
+	        spacing: 2
+	        padding: 2
+	        Button:
+	            text: "Отмена"
+	            background_color: 1, 0, 0
+	            on_release: root.cancel()
+
+		AnchorLayout:
+	        anchor_x: 'right'
+	        anchor_y: 'bottom'
+	        size_hint_x: 0.45
+	        size_hint_y: None
+	        height: 40
+	        spacing: 2
+	        padding: 2
+	        Button:
+	            background_color: 0, 1, 0
+	            text: "Добавить"
+	            on_release: root.save_temper_option(), root.cancel()
+
+
+
+
+<InjectionPage>:
+	orientation: 'lr-tb'
+	spacing: 3
+	padding: 3
+
+	AnchorLayout:
+		size_hint: 1, 0.04
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: 'Эти опции могут использоваться для определения, какой параметр тестировать,\nобеспечивать пользовательскую инъекционную нагрузку и дополнительные скрипты обфускации'
+
+
+	AnchorLayout:
+		size_hint: 1, 0.04
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: '--Parameter--'
+			color: [105, 106, 188, 1]
+
+	# -p
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '-p')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('-p')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'p'
+				on_release: root.add_input_text('-p')
+
+	# --skip
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--skip')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--skip')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'skip'
+				on_release: root.add_input_text('--skip')
+
+	# --skip-static
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--skip-static')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--skip-static')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'skip-static'
+
+	# --param-exclude
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--param-exclude')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--param-exclude')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'param-exclude'
+				on_release: root.add_input_text('--param-exclude')
+
+	# --param-filter
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--param-filter')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--param-filter')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'param-filter'
+				on_release: root.add_input_text('--param-filter')
+
+	AnchorLayout:
+		size_hint: 1, 0.04
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: '--Data Base--'
+			color: [105, 106, 188, 1]
+
+	# --dbms
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--dbms')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--dbms')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'dbms'
+				on_release: root.add_input_text('--dbms')
+
+	# --dbms-cred
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--dbms-cred')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--dbms-cred')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'dbms-cred'
+				on_release: root.add_input_text('--dbms-cred')
+
+	# --os
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--os')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--os')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'os'
+				on_release: root.add_input_text('--os')
+
+	AnchorLayout:
+		size_hint: 1, 0.04
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: '--Invalidating values--'
+			color: [105, 106, 188, 1]
+
+	# --invalid-bignum
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--invalid-bignum')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--invalid-bignum')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'invalid-bignum'
+
+	# --invalid-logical
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--invalid-logical')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--invalid-logical')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'invalid-logical'
+
+	# --invalid-string
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--invalid-string')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--invalid-string')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'invalid-string'
+
+	AnchorLayout:
+		size_hint: 1, 0.04
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: '--Turn off Mechanism--'
+			color: [105, 106, 188, 1]
+
+	# --no-cast
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--no-cast')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--no-cast')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'no-cast'
+
+	# --no-escape
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--no-escape')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--no-escape')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Label:
+				text: 'no-escape'
+
+	AnchorLayout:
+		size_hint: 1, 0.04
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: '--Custom injection payload--'
+			color: [105, 106, 188, 1]
+
+	# --prefix
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--prefix')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--prefix')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'prefix'
+				on_release: root.add_input_text('--prefix')
+
+	# --suffix
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--suffix')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--suffix')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'suffix'
+				on_release: root.add_input_text('--suffix')
+
+	AnchorLayout:
+		size_hint: 1, 0.04
+		anchor_x: 'center'
+		anchor_y: 'top'
+		Label:
+			text: '--Tamper injection data--'
+			color: [105, 106, 188, 1]
+
+	# --tamper
+	BoxLayout:
+		size_hint: 0.2, 0.05
+		spacing: 3
+		AnchorLayout:
+			anchor_x: 'left'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			CheckBox:
+				on_active: root.injection_page_to_dict(self.active, '--tamper')
+		AnchorLayout:
+			anchor_x: 'center'
+			anchor_y: 'center'
+			size_hint: 0.2, 1
+			Button:
+				background_color: 0, 0, 1
+				text: '?'
+				on_release: root.show_help_string('--tamper')
+		AnchorLayout:
+			anchor_x: 'right'
+			anchor_y: 'center'
+			size_hint: 0.6, 1
+			Button:
+				text: 'tamper'
+				on_release: root.tamper()

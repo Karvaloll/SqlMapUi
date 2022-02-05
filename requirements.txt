@@ -1,0 +1,15 @@
+certifi==2021.10.8
+charset-normalizer==2.0.11
+distlib==0.3.4
+docutils==0.18.1
+filelock==3.4.2
+idna==3.3
+Kivy==2.0.0
+Kivy-Garden==0.1.4
+loguru==0.6.0
+platformdirs==2.4.1
+Pygments==2.11.2
+requests==2.27.1
+six==1.16.0
+urllib3==1.26.8
+virtualenv==20.13.0
