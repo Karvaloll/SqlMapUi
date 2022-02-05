@@ -9,14 +9,14 @@ ___
 ![](pic/screen2.png "Вывод")
 
 ___
-###Зависимости:
+### Зависимости:
 ```commandline
 Python 3.8.10 
 Kivy 2.0.0
 loguru 0.6.0
 ```
 ___
-###Запуск:
+### Запуск:
 ```
 python -m pip install -r requirements.txt
 python3 Main.py
