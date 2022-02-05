@@ -31,10 +31,10 @@ https://kali.tools/?p=816
 ___
 Спасибо!
 
-BTC - 
+ BTC - 
 1MYQ3b6W7f5tFbr8aJYr3DmXKB5s34dfFU
 
-ETH - 
+ ETH - 
 0x964Be9848BC535175D1134223F1e6853c846943B
 
 
