@@ -22,6 +22,13 @@ python -m pip install -r requirements.txt
 python3 Main.py
 ```
 
+### Для запуска SqlMap из программы: 
+Если ваша команда запуска sqlmap отличается от 
+```root@root:~$ sqlmap```
+необходимо отредактировать команду запуска в файле command_dict.py
+
+![](pic/screen3.png)
+
 ___
 Источники:
 
