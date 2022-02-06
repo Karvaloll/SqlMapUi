@@ -3,7 +3,7 @@ ___
 Интерфейс для SQLMap.
 
 
-Программа не содержит файлы [SQLMap](https://github.com/sqlmapproject/sqlmap), её необходимо установить отдельно.
+Программа не содержит файлы [SQLMap](https://github.com/sqlmapproject/sqlmap).
 
 ___
 ![](pic/screen1.png "Стартовый экран")
