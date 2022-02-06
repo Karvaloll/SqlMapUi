@@ -30,8 +30,7 @@ https://kivy.org/doc/stable/gettingstarted/installation.html
 ___
 ### Запуск:
 ```
-python -m pip install -r requirements.txt
-python3 Main.py
+main.py
 ```
 
 ### Для запуска SqlMap из программы: 
