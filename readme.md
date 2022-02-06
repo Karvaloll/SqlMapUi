@@ -16,6 +16,17 @@ Python 3.8.10
 Kivy 2.0.0
 loguru 0.6.0
 ```
+
+Разрабатывалось на Kivy 2.0, но должно работать и на Kivy 1.11
+___
+### Установка:
+
+Установка Kivy:
+https://kivy.org/doc/stable/gettingstarted/installation.html
+
+Установака loguru:
+```pip install loguru```
+
 ___
 ### Запуск:
 ```
