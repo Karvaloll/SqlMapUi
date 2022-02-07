@@ -22,6 +22,9 @@ logger.add("comands.log", format="[{time:YYYY-MM-DD at HH:mm}] \n {message}\n", 
 
 Config.set('graphics', 'minimum_width', 1024)
 Config.set('graphics', 'minimum_height', 850)
+Config.set('kivy', 'exit_on_escape', 0)
+Config.set('graphics', 'position', 'custom')
+Config.set('graphics', 'top', 50)
 Config.set('kivy', 'keyboard_mode', 'system')
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
